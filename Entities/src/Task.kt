@@ -1,5 +1,5 @@
 interface Task {
     fun input()
-    fun execute()
+    fun execute(): Boolean
     fun output()
 }

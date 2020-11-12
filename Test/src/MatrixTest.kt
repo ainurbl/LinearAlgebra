@@ -1,18 +1,20 @@
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import java.lang.Math.abs
+import java.math.BigDecimal
 
 internal class MatrixTest {
 
-    private val accuracy = 0.000001
+    private val accuracy = BigDecimal(0.000001)
 
-    private fun equals(a: Double, b: Double): Boolean {
-        return abs(a - b) < accuracy
+    private fun equals(a: BigDecimal, b: BigDecimal): Boolean {
+        return (a - b).abs() < accuracy
+    }
+
+    private fun equals(a: BigDecimal, b: Double): Boolean {
+        return (a - BigDecimal(b)).abs() < accuracy
     }
 
     private fun equals(a: Circle, b: Circle): Boolean {
-        return abs(a.x - b.x) < accuracy && abs(a.y - b.y) < accuracy && abs(a.r - b.r) < accuracy
+        return (a.x - b.x).abs() < accuracy && (a.y - b.y).abs() < accuracy && (a.r - b.r).abs() < accuracy
     }
 
     @Test
@@ -22,7 +24,7 @@ internal class MatrixTest {
         val mat = Matrix(rows, cols)
         for (i in 0 until rows) {
             for (j in 0 until cols) {
-                mat[i][j] = i * j + 2 * i + 2 * j + 0.0
+                mat[i][j] = BigDecimal(i * j + 2 * i + 2 * j)
             }
         }
         val minusMat = -mat
@@ -41,8 +43,8 @@ internal class MatrixTest {
         val b = Matrix(rows, cols)
         for (i in 0 until rows) {
             for (j in 0 until cols) {
-                a[i][j] = i * j + 2 * i + 2 * j + 0.0
-                b[i][j] = 62 * i + 443.0 * j + i * j
+                a[i][j] = BigDecimal(i * j + 2 * i + 2 * j)
+                b[i][j] = BigDecimal(62 * i + 443.0 * j + i * j)
             }
         }
         val c = a + b
@@ -59,14 +61,14 @@ internal class MatrixTest {
         val cols = 2
         val a = Matrix(rows, cols)
         val b = Matrix(rows, cols)
-        a[0][0] = 1.0
-        b[0][0] = 3.0
-        a[0][1] = 2.0
-        b[0][1] = -3.0
-        a[1][0] = 3.0
-        b[1][0] = 2.0
-        a[1][1] = -4.0
-        b[1][1] = 1.0
+        a[0][0] = BigDecimal(1)
+        b[0][0] = BigDecimal(3)
+        a[0][1] = BigDecimal(2)
+        b[0][1] = BigDecimal(-3)
+        a[1][0] = BigDecimal(3)
+        b[1][0] = BigDecimal(2)
+        a[1][1] = BigDecimal(-4)
+        b[1][1] = BigDecimal(1)
         val c = a * b
         assert(equals(c[0][0], 7.0))
         assert(equals(c[0][1], -1.0))
@@ -82,8 +84,8 @@ internal class MatrixTest {
         val b = Matrix(cols, rows)
         for (i in 0 until rows) {
             for (j in 0 until cols) {
-                a[i][j] = i * 3 + j + 1.0
-                b[j][i] = -i * 3 - j - 1.0
+                a[i][j] = BigDecimal(i * 3 + j + 1.0)
+                b[j][i] = BigDecimal(-i * 3 - j - 1.0)
             }
         }
         b[1][0] = -b[1][0]
@@ -100,10 +102,10 @@ internal class MatrixTest {
         val rows = 2
         val cols = 2
         val a = Matrix(rows, cols)
-        a[0][0] = 1.0
-        a[1][1] = 1.0
-        a[1][0] = 5.0
-        a[0][1] = -2.0
+        a[0][0] = BigDecimal(1.0)
+        a[1][1] = BigDecimal(1.0)
+        a[1][0] = BigDecimal(5.0)
+        a[0][1] = BigDecimal(-2.0)
         val b = a.transpose()
         assert(equals(b[0][0], 1.0))
         assert(equals(b[0][1], 5.0))
@@ -116,8 +118,8 @@ internal class MatrixTest {
         val rows = 2
         val cols = 1
         val a = Matrix(rows, cols)
-        a[0][0] = 4.0
-        a[1][0] = 5.0
+        a[0][0] = BigDecimal(4.0)
+        a[1][0] = BigDecimal(5.0)
         val b = a.transpose()
         assert(equals(b[0][0], a[0][0]))
         assert(equals(b[0][1], a[1][0]))
@@ -130,15 +132,15 @@ internal class MatrixTest {
         val a = Matrix(rows, cols)
         for (i in 0 until rows) {
             for (j in 0 until cols) {
-                a[i][j] = i * cols + j + 1.0
+                a[i][j] = BigDecimal(i * cols + j + 1.0)
             }
         }
         a[rows - 1][cols - 1] = -a[rows - 1][cols - 1]
         val circles = a.getCircles()
 
-        assert(equals(circles[0], Circle(1.0, 0.0, 5.0)))
-        assert(equals(circles[1], Circle(5.0, 0.0, 10.0)))
-        assert(equals(circles[2], Circle(-9.0, 0.0, 15.0)))
+        assert(equals(circles[0], Circle( BigDecimal(1), BigDecimal.ZERO, BigDecimal(5))))
+        assert(equals(circles[1], Circle( BigDecimal(5),  BigDecimal.ZERO,  BigDecimal(10))))
+        assert(equals(circles[2], Circle( BigDecimal(-9), BigDecimal.ZERO,  BigDecimal(15))))
 
     }
 }

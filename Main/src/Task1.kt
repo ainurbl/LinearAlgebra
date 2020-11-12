@@ -1,8 +1,10 @@
+import java.math.BigDecimal
+
 class Task1 : Task { // x_{i+1} = Ax_{i} + b
     var n = 0
     var A = Matrix(0, 0)
     var b = Matrix(0, 0)
-    var eps = 0.0
+    var eps = BigDecimal.ZERO
     var x = Matrix(0,0)
 
     override fun input() {
@@ -11,38 +13,39 @@ class Task1 : Task { // x_{i+1} = Ax_{i} + b
         b = Matrix(n, 1)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = read.nextDouble()
+                A[i][j] = BigDecimal(read.nextDouble())
             }
         }
         for (i in 0 until n) {
-            b[i][0] = read.nextDouble()
+            b[i][0] = BigDecimal(read.nextDouble())
         }
-        eps = read.nextDouble()
+        eps = BigDecimal(read.nextDouble())
     }
 
-    private val uniteCircle = Circle(0.0, 0.0, 1.0)
+    private val uniteCircle = Circle(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE)
 
     fun circlesAreNotInUniteCircle() = !A.getCircles().all { circle -> circle.isInside(uniteCircle) }
 
     private var cantReach = false
 
-    override fun execute() {
+    override fun execute() : Boolean{
         x = Matrix(n, 1)
         val bad = circlesAreNotInUniteCircle()
         var badCounter = 0
         do {
             val newX = A * x + b
-            if (newX.F() >= x.F() + 1) {
+            if (newX.F() >= x.F() + BigDecimal.ONE) {
                 badCounter++
             } else {
                 badCounter = 0
             }
             if (bad && badCounter >= 20) {
                 cantReach = true
-                return
+                return false
             }
             x = newX
         } while ((x - A * x - b).F() >= eps)
+        return true
     }
 
     override fun output() {

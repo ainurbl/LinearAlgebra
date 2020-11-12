@@ -1,15 +1,17 @@
-import java.lang.Math.abs
 import java.lang.Math.sqrt
+import java.math.BigDecimal
+import java.math.MathContext
+import kotlin.math.absoluteValue
 import kotlin.random.Random.Default.nextDouble
 
-data class Matrix(private val rows: Int, private val cols: Int) {
-    private val arr: MutableList<MutableList<Double>> = mutableListOf()
+data class Matrix(val rows: Int, val cols: Int) {
+    private val arr: MutableList<MutableList<BigDecimal>> = mutableListOf()
 
     init {
         for (i in 0 until rows) {
             arr.add(mutableListOf())
             for (j in 0 until cols) {
-                arr[i].add(0.0)
+                arr[i].add(BigDecimal.ZERO)
             }
         }
     }
@@ -24,30 +26,30 @@ data class Matrix(private val rows: Int, private val cols: Int) {
         return returnMatrix
     }
 
-    fun girshgorinRadius(y: Int): Double {
-        var res = 0.0
+    private fun girshgorinRadius(y: Int): BigDecimal {
+        var res = BigDecimal.ZERO
         for (i in 0 until cols) {
-            res += abs(arr[y][i])
+            res += arr[y][i].abs()
         }
-        return res - abs(arr[y][y])
+        return res - arr[y][y].abs()
     }
 
     fun getCircles(): List<Circle> {
         val circles = mutableListOf<Circle>()
         for (y in 0 until rows) {
-            circles.add(Circle(arr[y][y], 0.0, girshgorinRadius(y)))
+            circles.add(Circle(arr[y][y], BigDecimal.ZERO, girshgorinRadius(y)))
         }
         return circles
     }
 
-    fun F(): Double {
-        var result = 0.0
+    fun F(): BigDecimal {
+        var result = BigDecimal.ZERO
         for (i in 0 until rows) {
             for (j in 0 until cols) {
                 result += arr[i][j] * arr[i][j]
             }
         }
-        return sqrt(result)
+        return result.sqrt(MathContext(10))
     }
 
     private fun cuteSeparator() {
@@ -73,7 +75,7 @@ data class Matrix(private val rows: Int, private val cols: Int) {
 
     operator fun get(y: Int) = arr[y]
 
-    operator fun set(y: Int, x: Int, newValue: Double) {
+    operator fun set(y: Int, x: Int, newValue: BigDecimal) {
         arr[y][x] = newValue
     }
 
@@ -127,7 +129,7 @@ data class Matrix(private val rows: Int, private val cols: Int) {
         fun I(n: Int): Matrix {
             val returnMatrix = Matrix(n, n)
             for (i in 0 until n) {
-                returnMatrix[i][i] = 1.0
+                returnMatrix[i][i] = BigDecimal.ONE
             }
             return returnMatrix
         }
@@ -136,7 +138,7 @@ data class Matrix(private val rows: Int, private val cols: Int) {
             val returnMatrix = Matrix(rows, cols)
             for (i in 0 until rows) {
                 for (j in 0 until cols) {
-                    returnMatrix[i][j] = nextDouble()
+                    returnMatrix[i][j] = BigDecimal(nextDouble())
                 }
             }
             return returnMatrix
