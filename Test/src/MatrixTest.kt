@@ -11,6 +11,10 @@ internal class MatrixTest {
         return abs(a - b) < accuracy
     }
 
+    private fun equals(a: Circle, b: Circle): Boolean {
+        return abs(a.x - b.x) < accuracy && abs(a.y - b.y) < accuracy && abs(a.r - b.r) < accuracy
+    }
+
     @Test
     fun `matrix unary minus`() {
         val rows = 2
@@ -119,4 +123,22 @@ internal class MatrixTest {
         assert(equals(b[0][1], a[1][0]))
     }
 
+    @Test
+    fun `matrix girshgorin circles`() {
+        val rows = 3
+        val cols = 3
+        val a = Matrix(rows, cols)
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                a[i][j] = i * cols + j + 1.0
+            }
+        }
+        a[rows - 1][cols - 1] = -a[rows - 1][cols - 1]
+        val circles = a.getCircles()
+
+        assert(equals(circles[0], Circle(1.0, 0.0, 5.0)))
+        assert(equals(circles[1], Circle(5.0, 0.0, 10.0)))
+        assert(equals(circles[2], Circle(-9.0, 0.0, 15.0)))
+
+    }
 }

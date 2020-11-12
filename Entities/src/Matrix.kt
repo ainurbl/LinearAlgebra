@@ -1,4 +1,6 @@
+import java.lang.Math.abs
 import java.lang.Math.sqrt
+import kotlin.random.Random.Default.nextDouble
 
 data class Matrix(private val rows: Int, private val cols: Int) {
     private val arr: MutableList<MutableList<Double>> = mutableListOf()
@@ -20,6 +22,22 @@ data class Matrix(private val rows: Int, private val cols: Int) {
             }
         }
         return returnMatrix
+    }
+
+    fun girshgorinRadius(y: Int): Double {
+        var res = 0.0
+        for (i in 0 until cols) {
+            res += abs(arr[y][i])
+        }
+        return res - abs(arr[y][y])
+    }
+
+    fun getCircles(): List<Circle> {
+        val circles = mutableListOf<Circle>()
+        for (y in 0 until rows) {
+            circles.add(Circle(arr[y][y], 0.0, girshgorinRadius(y)))
+        }
+        return circles
     }
 
     fun F(): Double {
@@ -80,6 +98,18 @@ data class Matrix(private val rows: Int, private val cols: Int) {
         return returnMatrix
     }
 
+
+    operator fun minus(otherMatrix: Matrix): Matrix {
+        assert(rows == otherMatrix.rows && cols == otherMatrix.cols)
+        val returnMatrix = this.copy()
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                returnMatrix[i][j] = arr[i][j] - otherMatrix[i][j]
+            }
+        }
+        return returnMatrix
+    }
+
     operator fun times(otherMatrix: Matrix): Matrix {
         assert(cols == otherMatrix.rows)
         val returnMatrix = Matrix(rows, otherMatrix.cols)
@@ -98,6 +128,16 @@ data class Matrix(private val rows: Int, private val cols: Int) {
             val returnMatrix = Matrix(n, n)
             for (i in 0 until n) {
                 returnMatrix[i][i] = 1.0
+            }
+            return returnMatrix
+        }
+
+        fun nextMatrix(rows: Int, cols: Int): Matrix {
+            val returnMatrix = Matrix(rows, cols)
+            for (i in 0 until rows) {
+                for (j in 0 until cols) {
+                    returnMatrix[i][j] = nextDouble()
+                }
             }
             return returnMatrix
         }
