@@ -2,7 +2,7 @@ import Matrix.Companion.I
 import java.math.BigDecimal
 import java.math.MathContext
 
-class Task3: Task {
+class Task3 : Task {
 
     var n = 0
     var A = Matrix(0, 0)
@@ -13,6 +13,13 @@ class Task3: Task {
 
     private val eps = BigDecimal(0.000001)
 
+    fun getFromOther(task: Task3) {
+        n = task.n
+        c = task.c
+        s = task.s
+        i = task.i
+        j = task.j
+    }
 
     override fun input() {
         n = read.nextInt()
@@ -26,7 +33,7 @@ class Task3: Task {
         j = read.nextInt() - 1
         c = read.nextBigDecimal()
         s = read.nextBigDecimal()
-        assert((c*c + s*s - BigDecimal.ONE).abs() <= eps)
+        assert((c * c + s * s - BigDecimal.ONE).abs() <= eps)
         assert(i < j && j <= n - 1 && i >= 0)
     }
 
@@ -38,22 +45,14 @@ class Task3: Task {
         s = A[i2][x].divide(denom, MathContext(10))
     }
 
-    fun getGivensRotation(): Matrix {
-        val ret = I(n)
-        ret[i][i] = c
-        ret[j][j] = c
-        ret[i][j] = s
-        ret[j][i] = -s
-        return ret
-    }
 
     override fun execute(): Boolean {
         val v1 = Matrix(1, n)
         val v2 = Matrix(1, n)
 
         for (k in 0 until n) {
-            v1[0][k] = c*A[i][k] + s*A[j][k]
-            v2[0][k] = -s*A[i][k] + c*A[j][k]
+            v1[0][k] = c * A[i][k] + s * A[j][k]
+            v2[0][k] = -s * A[i][k] + c * A[j][k]
         }
         for (k in 0 until n) {
             A[i][k] = v1[0][k]

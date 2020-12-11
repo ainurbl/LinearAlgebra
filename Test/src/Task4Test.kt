@@ -69,6 +69,20 @@ internal class Task4Test {
     }
 
 
+    @Test
+    fun `extra strong 2`() {
+        val engine = Task4()
+        engine.n = 50
+        engine.A = nextMatrix(50, 50)
+        val B = engine.A.copy()
+        engine.execute()
+        assert(engine.Q.isOrthogonal(accuracy))
+        assert(engine.R.isUpperTriangular(accuracy))
+        val QR = engine.Q * engine.R
+        assert((QR - B).F() <= accuracy)
+    }
+
+
 
 
 }

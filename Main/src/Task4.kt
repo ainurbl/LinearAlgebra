@@ -8,7 +8,7 @@ class Task4 : Task {
     var Q = Matrix(0, 0)
     var R = Matrix(0, 0)
 
-    private val accuracy = BigDecimal(0.00000000000001)
+    private val accuracy = BigDecimal(0.0000001)
 
     override fun input() {
         n = read.nextInt()
@@ -24,7 +24,9 @@ class Task4 : Task {
         val engine = Task3()
         engine.n = n
         engine.A = A
-        Q = I(n)
+        val Qengine = Task3()
+        Qengine.n = n
+        Qengine.A = I(n)
         for (j in 0 until n) {
             var id = -1
             for (i in j until n) {
@@ -37,7 +39,8 @@ class Task4 : Task {
             for (i in id + 1 until n) {
                 if (!engine.A.isZero(i, j, accuracy)) {
                     engine.erase(j, id, i)
-                    Q = engine.getGivensRotation() * Q
+                    Qengine.getFromOther(engine)
+                    Qengine.execute()
                     engine.execute()
                 }
             }
@@ -46,12 +49,14 @@ class Task4 : Task {
                 engine.j = id
                 engine.c = BigDecimal.ZERO
                 engine.s = BigDecimal.ONE
-                Q = engine.getGivensRotation() * Q
+                Qengine.getFromOther(engine)
+
+                Qengine.execute()
                 engine.execute()
             }
         }
         R = engine.A
-        Q = Q.transpose()
+        Q = Qengine.A.transpose().copy()
         return true
     }
 
