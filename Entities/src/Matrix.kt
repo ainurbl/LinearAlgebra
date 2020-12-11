@@ -16,6 +16,16 @@ data class Matrix(val rows: Int, val cols: Int) {
         }
     }
 
+    fun copy(): Matrix {
+        val ret = Matrix(rows, cols)
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                ret[i][j] = arr[i][j]
+            }
+        }
+        return ret
+    }
+
     fun set(list: List<BigDecimal>) {
         assert(list.size == rows * cols)
         for (i in 0 until rows) {
@@ -43,6 +53,24 @@ data class Matrix(val rows: Int, val cols: Int) {
                 arr[i][j] = BigDecimal(list[j + i * cols])
             }
         }
+    }
+
+    fun isZero(i: Int, j: Int, eps: BigDecimal): Boolean {
+        return arr[i][j].abs() <= eps
+    }
+
+    fun isOrthogonal(eps: BigDecimal): Boolean {
+        if (rows != cols) return false
+        return (this * transpose() - I(rows)).F() <= eps
+    }
+
+    fun isUpperTriangular(eps: BigDecimal): Boolean {
+        for (i in 0 until rows) {
+            for (j in 0 until i) {
+                if (!isZero(i, j, eps)) return false
+            }
+        }
+        return true
     }
 
     fun transpose(): Matrix {

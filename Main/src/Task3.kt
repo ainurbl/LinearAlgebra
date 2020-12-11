@@ -1,4 +1,6 @@
+import Matrix.Companion.I
 import java.math.BigDecimal
+import java.math.MathContext
 
 class Task3: Task {
 
@@ -26,6 +28,23 @@ class Task3: Task {
         s = read.nextBigDecimal()
         assert((c*c + s*s - BigDecimal.ONE).abs() <= eps)
         assert(i < j && j <= n - 1 && i >= 0)
+    }
+
+    fun erase(x: Int, i1: Int, i2: Int) {
+        i = i1
+        j = i2
+        val denom = (A[i1][x].pow(2) + A[i2][x].pow(2)).sqrt(MathContext(10))
+        c = A[i1][x].divide(denom, MathContext(10))
+        s = A[i2][x].divide(denom, MathContext(10))
+    }
+
+    fun getGivensRotation(): Matrix {
+        val ret = I(n)
+        ret[i][i] = c
+        ret[j][j] = c
+        ret[i][j] = s
+        ret[j][i] = -s
+        return ret
     }
 
     override fun execute(): Boolean {
