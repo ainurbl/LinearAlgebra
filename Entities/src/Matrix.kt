@@ -16,6 +16,35 @@ data class Matrix(val rows: Int, val cols: Int) {
         }
     }
 
+    fun set(list: List<BigDecimal>) {
+        assert(list.size == rows * cols)
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                arr[i][j] = list[j + i * cols]
+            }
+        }
+    }
+
+    @JvmName("set1")
+    fun set(list: List<Double>) {
+        assert(list.size == rows * cols)
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                arr[i][j] = BigDecimal(list[j + i * cols])
+            }
+        }
+    }
+
+    @JvmName("set2")
+    fun set(list: List<Long>) {
+        assert(list.size == rows * cols)
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                arr[i][j] = BigDecimal(list[j + i * cols])
+            }
+        }
+    }
+
     fun transpose(): Matrix {
         val returnMatrix = Matrix(cols, rows)
         for (i in 0 until rows) {

@@ -49,11 +49,8 @@ internal class Task2Test {
         engine.A = Matrix(engine.n, engine.n)
         engine.b = Matrix(engine.n, 1)
 
-        engine.A[0][0] = BigDecimal(1)
-        engine.A[1][1] = BigDecimal(1)
-
-        engine.b[0][0] = BigDecimal(2)
-        engine.b[1][0] = BigDecimal(-3)
+        engine.A.set(listOf(1,0,0,1))
+        engine.b.set(listOf(2,-3))
 
         engine.execute()
 
