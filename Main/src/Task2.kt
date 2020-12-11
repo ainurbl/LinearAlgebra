@@ -1,4 +1,5 @@
 import java.math.BigDecimal
+import java.math.MathContext
 
 class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
     var n = 0
@@ -38,7 +39,9 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         }
         x = Matrix(n, 1)
         var bad = true
-        for (i in 0 until n) bad = A[i][i].abs() < eps
+        for (i in 0 until n) {
+            if( A[i][i].abs() > eps)bad = false
+        }
         if (bad) {
             cantReach = true
             return false
@@ -63,14 +66,15 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
     fun solveEquation(L: Matrix, b: Matrix): Matrix {
         val n = L.rows
         val returnMatrix = Matrix(n, 1)
-        returnMatrix[0][0] = b[0][0] / L[0][0]
+        returnMatrix[0][0] = b[0][0].divide(L[0][0], MathContext(100))
         for (i in 1 until n) {
             var tmp = b[i][0]
             for (j in 0 until i) {
                 tmp -= L[i][j] * returnMatrix[j][0]
             }
-            returnMatrix[i][0] = tmp / L[i][i]
+            returnMatrix[i][0] = tmp.divide(L[i][i],MathContext(100))
         }
+
         return returnMatrix
     }
 

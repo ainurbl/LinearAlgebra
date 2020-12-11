@@ -27,7 +27,7 @@ internal class Task2Test {
     @Test
     fun `solve equation test2`() {
         val engine = Task2()
-        val n = 400
+        val n = 500
         val L = Matrix(n,n)
         for (i in 0 until n) {
             for (j in 0 until i) {
@@ -38,6 +38,7 @@ internal class Task2Test {
             } while (L[i][i].abs() < accuracy)
         }
         val b = nextMatrix(n, 1)
+        println((L * engine.solveEquation(L, b) - b).F())
         assert((L * engine.solveEquation(L, b) - b).F() <= accuracy)
     }
 
@@ -68,6 +69,5 @@ internal class Task2Test {
         } while (!engine.execute())
         assert((engine.A * engine.x - engine.b).F() <= engine.eps)
     }
-
 
 }
