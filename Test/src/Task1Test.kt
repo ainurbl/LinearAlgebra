@@ -31,4 +31,16 @@ internal class Task1Test {
         assert((engine.x - engine.A * engine.x - engine.b).F() <= engine.eps)
     }
 
+    @Test
+    fun `strong 1`() {
+        val engine = Task1()
+        engine.n = 3
+        engine.eps = accuracy
+        engine.b = Matrix.nextMatrix(3, 1)
+        engine.b.set(listOf(1,2,3))
+        engine.A = Matrix(3,3)
+        engine.A.set(listOf(1,2,3,4,5,6,7,8,9))
+        assert(!engine.execute())
+    }
+
 }
