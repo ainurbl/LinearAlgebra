@@ -38,7 +38,6 @@ internal class Task2Test {
             } while (L[i][i].abs() < accuracy)
         }
         val b = nextMatrix(n, 1)
-        println((L * engine.solveEquation(L, b) - b).F())
         assert((L * engine.solveEquation(L, b) - b).F() <= accuracy)
     }
 

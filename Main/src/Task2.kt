@@ -66,13 +66,13 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
     fun solveEquation(L: Matrix, b: Matrix): Matrix {
         val n = L.rows
         val returnMatrix = Matrix(n, 1)
-        returnMatrix[0][0] = b[0][0].divide(L[0][0], MathContext(100))
+        returnMatrix[0][0] = b[0][0].divide(L[0][0], MathContext(10000))
         for (i in 1 until n) {
             var tmp = b[i][0]
             for (j in 0 until i) {
                 tmp -= L[i][j] * returnMatrix[j][0]
             }
-            returnMatrix[i][0] = tmp.divide(L[i][i],MathContext(100))
+            returnMatrix[i][0] = tmp.divide(L[i][i],MathContext(10000))
         }
 
         return returnMatrix
