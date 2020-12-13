@@ -8,7 +8,7 @@ data class Matrix(val rows: Int, val cols: Int) {
         for (i in 0 until rows) {
             arr.add(mutableListOf())
             for (j in 0 until cols) {
-                arr[i].add(BigDecimal.ZERO)
+                arr[i].add(BigDecimal(0, Precision.context))
             }
         }
     }
@@ -37,7 +37,7 @@ data class Matrix(val rows: Int, val cols: Int) {
         assert(list.size == rows * cols)
         for (i in 0 until rows) {
             for (j in 0 until cols) {
-                arr[i][j] = BigDecimal(list[j + i * cols])
+                arr[i][j] = BigDecimal(list[j + i * cols], Precision.context)
             }
         }
     }
@@ -47,7 +47,7 @@ data class Matrix(val rows: Int, val cols: Int) {
         assert(list.size == rows * cols)
         for (i in 0 until rows) {
             for (j in 0 until cols) {
-                arr[i][j] = BigDecimal(list[j + i * cols])
+                arr[i][j] = BigDecimal(list[j + i * cols], Precision.context)
             }
         }
     }
@@ -81,7 +81,7 @@ data class Matrix(val rows: Int, val cols: Int) {
     }
 
     private fun girshgorinRadius(y: Int): BigDecimal {
-        var res = BigDecimal.ZERO
+        var res = BigDecimal(0, Precision.context)
         for (i in 0 until cols) {
             res += arr[y][i].abs()
         }
@@ -91,13 +91,13 @@ data class Matrix(val rows: Int, val cols: Int) {
     fun getCircles(): List<Circle> {
         val circles = mutableListOf<Circle>()
         for (y in 0 until rows) {
-            circles.add(Circle(arr[y][y], BigDecimal.ZERO, girshgorinRadius(y)))
+            circles.add(Circle(arr[y][y], BigDecimal(0, Precision.context), girshgorinRadius(y)))
         }
         return circles
     }
 
     fun F(): BigDecimal {
-        var result = BigDecimal.ZERO
+        var result = BigDecimal(0, Precision.context)
         for (i in 0 until rows) {
             for (j in 0 until cols) {
                 result += arr[i][j] * arr[i][j]
@@ -179,11 +179,21 @@ data class Matrix(val rows: Int, val cols: Int) {
         return returnMatrix
     }
 
+    operator fun times(bigDecimal: BigDecimal): Matrix {
+        val returnMatrix = Matrix(rows, cols)
+        for (i in 0 until returnMatrix.rows) {
+            for (j in 0 until returnMatrix.cols) {
+                returnMatrix[i][j] = arr[i][j] * bigDecimal
+            }
+        }
+        return returnMatrix
+    }
+
     companion object {
         fun I(n: Int): Matrix {
             val returnMatrix = Matrix(n, n)
             for (i in 0 until n) {
-                returnMatrix[i][i] = BigDecimal.ONE
+                returnMatrix[i][i] = BigDecimal(1, Precision.context)
             }
             return returnMatrix
         }
@@ -192,7 +202,7 @@ data class Matrix(val rows: Int, val cols: Int) {
             val returnMatrix = Matrix(rows, cols)
             for (i in 0 until rows) {
                 for (j in 0 until cols) {
-                    returnMatrix[i][j] = BigDecimal(nextDouble())
+                    returnMatrix[i][j] = BigDecimal(nextDouble(), Precision.context)
                 }
             }
             return returnMatrix

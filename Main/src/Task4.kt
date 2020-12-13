@@ -15,7 +15,7 @@ class Task4 : Task {
         A = Matrix(n, n)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = BigDecimal(read.nextDouble())
+                A[i][j] = BigDecimal(read.nextDouble(), Precision.context)
             }
         }
     }
@@ -47,8 +47,8 @@ class Task4 : Task {
             if (id != j) {
                 engine.i = j
                 engine.j = id
-                engine.c = BigDecimal.ZERO
-                engine.s = BigDecimal.ONE
+                engine.c = BigDecimal(0, Precision.context)
+                engine.s = BigDecimal(1, Precision.context)
                 Qengine.getFromOther(engine)
 
                 Qengine.execute()

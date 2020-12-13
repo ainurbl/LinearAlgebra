@@ -14,13 +14,13 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         b = Matrix(n, 1)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = BigDecimal(read.nextDouble())
+                A[i][j] = BigDecimal(read.nextDouble(), Precision.context)
             }
         }
         for (i in 0 until n) {
-            b[i][0] = BigDecimal(read.nextDouble())
+            b[i][0] = BigDecimal(read.nextDouble(), Precision.context)
         }
-        eps = BigDecimal(read.nextDouble())
+        eps = BigDecimal(read.nextDouble(), Precision.context)
     }
 
     private var cantReach = false
@@ -49,7 +49,7 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         var badCounter = 0
         do {
             val newX = solveEquation(L, minusU * x + b, Precision.context)
-            if (newX.F() >= x.F() + BigDecimal.ONE) {
+            if (newX.F() >= x.F() + BigDecimal(1, Precision.context)) {
                 badCounter++
             } else {
                 badCounter = 0

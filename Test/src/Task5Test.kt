@@ -10,18 +10,17 @@ internal class Task5Test {
 
     @Test
     fun `simple 1`() {
-        val engine = Task4()
-        engine.n = 2
-        engine.A = Matrix(2,2)
-        engine.A.set(listOf(0,1,1,0))
+        val engine = Task5()
+        val n = 3
+        engine.n = n
+        engine.A = Matrix(n,n)
+        engine.v = Matrix(n, 1)
+        engine.v.set(listOf(2,2,8))
+        engine.A.set(listOf(1,3,3,7,1,4,8,8,1))
         engine.execute()
-        assert(engine.Q.isOrthogonal(accuracy))
-        assert(engine.R.isUpperTriangular(accuracy))
-
-        val QR = engine.Q * engine.R
-        engine.A.set(listOf(0,1,1,0))
-
-        assert((QR - engine.A).F() <= accuracy)
+        val result = Matrix(n,n)
+        result.set(listOf(-319, -285, -85, -313, -287, -84, -1272, -1144, -351))
+        assert((result - engine.A).F() <= accuracy)
     }
 
 

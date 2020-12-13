@@ -24,14 +24,14 @@ class Task3 : Task {
         A = Matrix(n, n)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = BigDecimal(read.nextDouble())
+                A[i][j] = BigDecimal(read.nextDouble(), Precision.context)
             }
         }
         i = read.nextInt() - 1
         j = read.nextInt() - 1
         c = read.nextBigDecimal()
         s = read.nextBigDecimal()
-        assert((c * c + s * s - BigDecimal.ONE).abs() <= eps)
+        assert((c * c + s * s - BigDecimal(1, Precision.context)).abs() <= eps)
         assert(i < j && j <= n - 1 && i >= 0)
     }
 
