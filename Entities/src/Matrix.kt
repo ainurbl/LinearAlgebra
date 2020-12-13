@@ -63,6 +63,11 @@ data class Matrix(val rows: Int, val cols: Int) {
         return (this * transpose() - I(rows)).F() <= eps
     }
 
+    fun isSymmetrical(eps: BigDecimal): Boolean {
+        if(rows != cols) return false
+        return (this - transpose()).F() <= eps
+    }
+
     fun isUpperTriangular(eps: BigDecimal): Boolean {
         for (i in 0 until rows) {
             for (j in 0 until i) {
@@ -93,9 +98,15 @@ data class Matrix(val rows: Int, val cols: Int) {
     fun getCircles(): List<Circle> {
         val circles = mutableListOf<Circle>()
         for (y in 0 until rows) {
-            circles.add(Circle(arr[y][y], BigDecimal.ZERO.setScale(Precision.scale, RoundingMode.HALF_UP), girshgorinRadius(y)))
+            circles.add(Circle(arr[y][y].setScale(Precision.scale, RoundingMode.HALF_UP), BigDecimal.ZERO.setScale(Precision.scale, RoundingMode.HALF_UP), girshgorinRadius(y).setScale(Precision.scale, RoundingMode.HALF_UP)))
         }
         return circles
+    }
+
+    fun allCirclesAreLessThan(eps: BigDecimal): Boolean {
+        return getCircles().all { circle ->
+            circle.r <= eps
+        }
     }
 
     fun F(): BigDecimal {
@@ -213,5 +224,21 @@ data class Matrix(val rows: Int, val cols: Int) {
             }
             return returnMatrix
         }
+
+        fun nextSymMatrix(rows: Int, cols: Int): Matrix {
+            val returnMatrix = Matrix(rows, cols)
+            for (i in 0 until rows) {
+                for (j in i until cols) {
+                    returnMatrix[i][j] = BigDecimal(nextDouble()).setScale(Precision.scale, RoundingMode.HALF_UP)
+                }
+            }
+            for(i in 0 until  rows) {
+                for (j in 0 until i) {
+                    returnMatrix[i][j] = returnMatrix[j][i]
+                }
+            }
+            return returnMatrix
+        }
+
     }
 }
