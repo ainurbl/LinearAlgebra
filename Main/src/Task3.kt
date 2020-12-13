@@ -1,6 +1,4 @@
-import Matrix.Companion.I
 import java.math.BigDecimal
-import java.math.MathContext
 
 class Task3 : Task {
 
@@ -40,9 +38,9 @@ class Task3 : Task {
     fun erase(x: Int, i1: Int, i2: Int) {
         i = i1
         j = i2
-        val denom = (A[i1][x].pow(2) + A[i2][x].pow(2)).sqrt(MathContext(10))
-        c = A[i1][x].divide(denom, MathContext(10))
-        s = A[i2][x].divide(denom, MathContext(10))
+        val denom = (A[i1][x].pow(2) + A[i2][x].pow(2)).sqrt(Precision.context)
+        c = A[i1][x].divide(denom, Precision.context)
+        s = A[i2][x].divide(denom, Precision.context)
     }
 
 

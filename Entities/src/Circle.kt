@@ -1,10 +1,9 @@
 import java.math.BigDecimal
-import java.math.MathContext
 
 data class Circle(val x: BigDecimal, val y: BigDecimal, val r: BigDecimal) {
 
     fun isInside(bigCircle: Circle): Boolean {
-        return distSquared(x, y, bigCircle.x, bigCircle.y).sqrt(MathContext(20)) + r <= bigCircle.r
+        return distSquared(x, y, bigCircle.x, bigCircle.y).sqrt(Precision.context) + r <= bigCircle.r
     }
 }
 

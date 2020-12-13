@@ -1,7 +1,4 @@
-import java.lang.Math.sqrt
 import java.math.BigDecimal
-import java.math.MathContext
-import kotlin.math.absoluteValue
 import kotlin.random.Random.Default.nextDouble
 
 data class Matrix(val rows: Int, val cols: Int) {
@@ -106,7 +103,7 @@ data class Matrix(val rows: Int, val cols: Int) {
                 result += arr[i][j] * arr[i][j]
             }
         }
-        return result.sqrt(MathContext(10))
+        return result.sqrt(Precision.context)
     }
 
     private fun cuteSeparator() {

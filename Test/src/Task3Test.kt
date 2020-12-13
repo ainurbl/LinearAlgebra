@@ -1,13 +1,10 @@
-import Matrix.Companion.nextMatrix
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
-import java.math.MathContext
-import kotlin.random.Random.Default.nextDouble
 
 internal class Task3Test {
 
     private val accuracy = BigDecimal(0.000001)
-    private val sqrt3 = BigDecimal(3).sqrt(MathContext(10))
+    private val sqrt3 = BigDecimal(3).sqrt(Precision.context)
 
     @Test
     fun `simple mult 1`() {

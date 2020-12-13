@@ -40,7 +40,7 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         x = Matrix(n, 1)
         var bad = true
         for (i in 0 until n) {
-            if( A[i][i].abs() > eps)bad = false
+            if (A[i][i].abs() > eps) bad = false
         }
         if (bad) {
             cantReach = true
@@ -48,7 +48,7 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         }
         var badCounter = 0
         do {
-            val newX = solveEquation(L, minusU * x + b)
+            val newX = solveEquation(L, minusU * x + b, Precision.context)
             if (newX.F() >= x.F() + BigDecimal.ONE) {
                 badCounter++
             } else {
@@ -63,16 +63,16 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         return true
     }
 
-    fun solveEquation(L: Matrix, b: Matrix): Matrix {
+    fun solveEquation(L: Matrix, b: Matrix, context: MathContext): Matrix {
         val n = L.rows
         val returnMatrix = Matrix(n, 1)
-        returnMatrix[0][0] = b[0][0].divide(L[0][0], MathContext(10000))
+        returnMatrix[0][0] = b[0][0].divide(L[0][0], context)
         for (i in 1 until n) {
             var tmp = b[i][0]
             for (j in 0 until i) {
                 tmp -= L[i][j] * returnMatrix[j][0]
             }
-            returnMatrix[i][0] = tmp.divide(L[i][i],MathContext(10000))
+            returnMatrix[i][0] = tmp.divide(L[i][i], context)
         }
 
         return returnMatrix

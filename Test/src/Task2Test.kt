@@ -2,10 +2,11 @@ import Matrix.Companion.nextMatrix
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import kotlin.random.Random.Default.nextDouble
+import kotlin.random.Random.Default.nextInt
 
 internal class Task2Test {
 
-    private val accuracy = BigDecimal(0.000001)
+    private val accuracy = BigDecimal(0.0001)
 
     @Test
     fun `solve equation test1`() {
@@ -21,7 +22,7 @@ internal class Task2Test {
             } while (L[i][i].abs() < accuracy)
         }
         val b = nextMatrix(n, 1)
-        assert((L * engine.solveEquation(L, b) - b).F() <= accuracy)
+        assert((L * engine.solveEquation(L, b, Precision.bigContext) - b).F() <= accuracy)
     }
 
     @Test
@@ -31,14 +32,16 @@ internal class Task2Test {
         val L = Matrix(n,n)
         for (i in 0 until n) {
             for (j in 0 until i) {
-                L[i][j] = BigDecimal(nextDouble()*5)
+                L[i][j] = BigDecimal(nextInt()*5)
             }
             do {
-                L[i][i] = BigDecimal(nextDouble()*5)
+                L[i][i] = BigDecimal(nextInt()*5)
             } while (L[i][i].abs() < accuracy)
         }
         val b = nextMatrix(n, 1)
-        assert((L * engine.solveEquation(L, b) - b).F() <= accuracy)
+        val tt = (L * engine.solveEquation(L, b, Precision.bigContext) - b).F()
+        println(tt)
+        assert(tt <= accuracy)
     }
 
     @Test
