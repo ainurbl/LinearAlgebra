@@ -1,4 +1,5 @@
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 class Task1 : Task { // x_{i+1} = Ax_{i} + b
     var n = 0
@@ -13,16 +14,16 @@ class Task1 : Task { // x_{i+1} = Ax_{i} + b
         b = Matrix(n, 1)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = BigDecimal(read.nextDouble(), Precision.context)
+                A[i][j] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
             }
         }
         for (i in 0 until n) {
-            b[i][0] = BigDecimal(read.nextDouble(), Precision.context)
+            b[i][0] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
         }
-        eps = BigDecimal(read.nextDouble(), Precision.context)
+        eps = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
     }
 
-    private val uniteCircle = Circle(BigDecimal(0, Precision.context), BigDecimal(0, Precision.context), BigDecimal(1, Precision.context))
+    private val uniteCircle = Circle(BigDecimal.ZERO .setScale(Precision.scale, RoundingMode.HALF_UP), BigDecimal.ZERO .setScale(Precision.scale, RoundingMode.HALF_UP), BigDecimal.ONE .setScale(Precision.scale, RoundingMode.HALF_UP))
 
     fun circlesAreNotInUniteCircle() = !A.getCircles().all { circle -> circle.isInside(uniteCircle) }
 
@@ -34,7 +35,7 @@ class Task1 : Task { // x_{i+1} = Ax_{i} + b
         var badCounter = 0
         do {
             val newX = A * x + b
-            if (newX.F() >= x.F() + BigDecimal(1, Precision.context)) {
+            if (newX.F() >= x.F() + BigDecimal.ONE.setScale(Precision.scale, RoundingMode.HALF_UP)) {
                 badCounter++
             } else {
                 badCounter = 0

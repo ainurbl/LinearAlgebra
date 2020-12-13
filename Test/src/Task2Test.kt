@@ -22,7 +22,7 @@ internal class Task2Test {
             } while (L[i][i].abs() < accuracy)
         }
         val b = nextMatrix(n, 1)
-        assert((L * engine.solveEquation(L, b, Precision.bigContext) - b).F() <= accuracy)
+        assert((L * engine.solveEquation(L, b, Precision.bigMc) - b).F() <= accuracy)
     }
 
     @Test
@@ -39,7 +39,7 @@ internal class Task2Test {
             } while (L[i][i].abs() < accuracy)
         }
         val b = nextMatrix(n, 1)
-        val tt = (L * engine.solveEquation(L, b, Precision.bigContext) - b).F()
+        val tt = (L * engine.solveEquation(L, b, Precision.bigMc) - b).F()
         println(tt)
         assert(tt <= accuracy)
     }

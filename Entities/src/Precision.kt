@@ -1,6 +1,8 @@
 import java.math.MathContext
 
 object Precision {
-    val context = MathContext(10)
-    val bigContext = MathContext(1000)
+    val scale = 10
+    val bigScale = 1000
+    val mc = MathContext(scale)
+    val bigMc = MathContext(bigScale)
 }

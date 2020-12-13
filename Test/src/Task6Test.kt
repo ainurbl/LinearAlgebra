@@ -3,20 +3,19 @@ import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 
 
-internal class Task4Test {
+internal class Task6Test {
 
     private val accuracy = BigDecimal(0.000001)
 
     @Test
     fun `simple 1`() {
-        val engine = Task4()
+        val engine = Task6()
         engine.n = 2
         engine.A = Matrix(2, 2)
         engine.A.set(listOf(0, 1, 1, 0))
         engine.execute()
         assert(engine.Q.isOrthogonal(accuracy))
         assert(engine.R.isUpperTriangular(accuracy))
-
         val QR = engine.Q * engine.R
         engine.A.set(listOf(0, 1, 1, 0))
 
@@ -25,7 +24,7 @@ internal class Task4Test {
 
     @Test
     fun `simple 2`() {
-        val engine = Task4()
+        val engine = Task6()
         engine.n = 2
         engine.A = Matrix(2, 2)
         engine.A.set(listOf(1, 2, 3, 4))
@@ -41,7 +40,7 @@ internal class Task4Test {
 
     @Test
     fun `simple 3`() {
-        val engine = Task4()
+        val engine = Task6()
         engine.n = 3
         engine.A = Matrix(3, 3)
         engine.A.set(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9))
@@ -56,7 +55,7 @@ internal class Task4Test {
 
     @Test
     fun `strong 1`() {
-        val engine = Task4()
+        val engine = Task6()
         engine.n = 4
         engine.A = nextMatrix(4, 4)
         val B = engine.A.copy()
@@ -71,7 +70,7 @@ internal class Task4Test {
     @Test
     fun `extra strong 2`() {
         val n = 100
-        val engine = Task4()
+        val engine = Task6()
         engine.n = n
         engine.A = nextMatrix(n, n)
         val B = engine.A.copy()

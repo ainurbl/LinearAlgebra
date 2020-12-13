@@ -1,5 +1,6 @@
 import Matrix.Companion.I
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 class Task4 : Task {
 
@@ -15,7 +16,7 @@ class Task4 : Task {
         A = Matrix(n, n)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = BigDecimal(read.nextDouble(), Precision.context)
+                A[i][j] = read.nextBigDecimal().setScale(Precision.scale, RoundingMode.HALF_UP)
             }
         }
     }
@@ -47,8 +48,8 @@ class Task4 : Task {
             if (id != j) {
                 engine.i = j
                 engine.j = id
-                engine.c = BigDecimal(0, Precision.context)
-                engine.s = BigDecimal(1, Precision.context)
+                engine.c = BigDecimal.ZERO .setScale(Precision.scale, RoundingMode.HALF_UP)
+                engine.s = BigDecimal.ONE .setScale(Precision.scale, RoundingMode.HALF_UP)
                 Qengine.getFromOther(engine)
 
                 Qengine.execute()
@@ -57,6 +58,8 @@ class Task4 : Task {
         }
         R = engine.A
         Q = Qengine.A.transpose().copy()
+//        R.print()
+//        Q.print()
         return true
     }
 

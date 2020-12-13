@@ -1,4 +1,5 @@
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 class Task5 : Task {
 
@@ -11,7 +12,7 @@ class Task5 : Task {
         A = Matrix(n, n)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = BigDecimal(read.nextDouble(), Precision.context)
+                A[i][j] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
             }
         }
         v = Matrix(n, 1)
@@ -20,12 +21,25 @@ class Task5 : Task {
         }
     }
 
+    var EnA = Matrix(0,0)
+
+    private val minus2 = BigDecimal(-2, Precision.mc)
+
     override fun execute(): Boolean {
-        val EnA = A.copy()
+        EnA = A.copy()
+//        EnA.print()
         A = v.transpose() * A
+//        v.transpose().print()
+//        A.print()
         A = v * A
-        A *= BigDecimal(-2, Precision.context)
+//        A.print()
+
+        A *= minus2
+//        A.print()
+
         A = EnA + A
+//        A.print()
+
         return true
     }
 

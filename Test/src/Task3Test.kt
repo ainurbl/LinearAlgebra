@@ -4,7 +4,7 @@ import java.math.BigDecimal
 internal class Task3Test {
 
     private val accuracy = BigDecimal(0.000001)
-    private val sqrt3 = BigDecimal(3).sqrt(Precision.context)
+    private val sqrt3 = BigDecimal(3).sqrt(Precision.bigMc)
 
     @Test
     fun `simple mult 1`() {

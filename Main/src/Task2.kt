@@ -1,5 +1,6 @@
 import java.math.BigDecimal
 import java.math.MathContext
+import java.math.RoundingMode
 
 class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
     var n = 0
@@ -14,13 +15,13 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         b = Matrix(n, 1)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = BigDecimal(read.nextDouble(), Precision.context)
+                A[i][j] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
             }
         }
         for (i in 0 until n) {
-            b[i][0] = BigDecimal(read.nextDouble(), Precision.context)
+            b[i][0] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
         }
-        eps = BigDecimal(read.nextDouble(), Precision.context)
+        eps = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
     }
 
     private var cantReach = false
@@ -48,8 +49,8 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         }
         var badCounter = 0
         do {
-            val newX = solveEquation(L, minusU * x + b, Precision.context)
-            if (newX.F() >= x.F() + BigDecimal(1, Precision.context)) {
+            val newX = solveEquation(L, minusU * x + b, Precision.mc)
+            if (newX.F() >= x.F() + BigDecimal.ONE .setScale(Precision.scale, RoundingMode.HALF_UP)) {
                 badCounter++
             } else {
                 badCounter = 0
