@@ -16,7 +16,7 @@ class Task4 : Task {
         A = Matrix(n, n)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = read.nextBigDecimal().setScale(Precision.scale, RoundingMode.HALF_UP)
+                A[i][j] = read.nextBigDecimal()
             }
         }
     }
@@ -48,8 +48,8 @@ class Task4 : Task {
             if (id != j) {
                 engine.i = j
                 engine.j = id
-                engine.c = BigDecimal.ZERO .setScale(Precision.scale, RoundingMode.HALF_UP)
-                engine.s = BigDecimal.ONE .setScale(Precision.scale, RoundingMode.HALF_UP)
+                engine.c = BigDecimal.ZERO
+                engine.s = BigDecimal.ONE
                 Qengine.getFromOther(engine)
 
                 Qengine.execute()

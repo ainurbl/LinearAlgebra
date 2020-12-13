@@ -25,14 +25,14 @@ class Task3 : Task {
         A = Matrix(n, n)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
+                A[i][j] = read.nextBigDecimal()
             }
         }
         i = read.nextInt() - 1
         j = read.nextInt() - 1
         c = read.nextBigDecimal()
         s = read.nextBigDecimal()
-        assert(c * c + s * s - BigDecimal.ONE.setScale(Precision.scale, RoundingMode.HALF_UP).abs() <= eps)
+        assert(c * c + s * s - BigDecimal.ONE.abs() <= eps)
         assert(i < j && j <= n - 1 && i >= 0)
     }
 

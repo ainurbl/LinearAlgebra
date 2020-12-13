@@ -14,16 +14,16 @@ class Task1 : Task { // x_{i+1} = Ax_{i} + b
         b = Matrix(n, 1)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
+                A[i][j] = read.nextBigDecimal()
             }
         }
         for (i in 0 until n) {
-            b[i][0] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
+            b[i][0] = read.nextBigDecimal()
         }
-        eps = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
+        eps = read.nextBigDecimal()
     }
 
-    private val uniteCircle = Circle(BigDecimal.ZERO .setScale(Precision.scale, RoundingMode.HALF_UP), BigDecimal.ZERO .setScale(Precision.scale, RoundingMode.HALF_UP), BigDecimal.ONE .setScale(Precision.scale, RoundingMode.HALF_UP))
+    private val uniteCircle = Circle(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE)
 
     fun circlesAreNotInUniteCircle() = !A.getCircles().all { circle -> circle.isInside(uniteCircle) }
 
@@ -35,7 +35,7 @@ class Task1 : Task { // x_{i+1} = Ax_{i} + b
         var badCounter = 0
         do {
             val newX = A * x + b
-            if (newX.F() >= x.F() + BigDecimal.ONE.setScale(Precision.scale, RoundingMode.HALF_UP)) {
+            if (newX.F() >= x.F() + BigDecimal.ONE) {
                 badCounter++
             } else {
                 badCounter = 0

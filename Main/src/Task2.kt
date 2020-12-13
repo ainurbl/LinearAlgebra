@@ -15,13 +15,13 @@ class Task2 : Task { // Lx_{i+1} = -Ux_{i} + b, L + U = A
         b = Matrix(n, 1)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
+                A[i][j] = read.nextBigDecimal()
             }
         }
         for (i in 0 until n) {
-            b[i][0] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
+            b[i][0] = read.nextBigDecimal()
         }
-        eps = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
+        eps = read.nextBigDecimal()
     }
 
     private var cantReach = false

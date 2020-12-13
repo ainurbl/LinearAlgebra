@@ -12,7 +12,13 @@ class Task6 : Task {
     var eps = BigDecimal(0.00000001, Precision.mc)
 
     override fun input() {
-        TODO("Not yet implemented")
+        n = read.nextInt()
+        A = Matrix(n, n)
+        for (i in 0 until n) {
+            for (j in 0 until n) {
+                A[i][j] = read.nextBigDecimal()
+            }
+        }
     }
 
 
@@ -27,16 +33,16 @@ class Task6 : Task {
         for (j in 0 until n - 1) {
             for (i in 0 until n) {
                 if (i < j) {
-                    v[i][0] = BigDecimal.ZERO.setScale(Precision.scale, RoundingMode.HALF_UP)
+                    v[i][0] = BigDecimal.ZERO
                 }
                 else {
-                    v[i][0] = engine.A[i][j].setScale(Precision.scale, RoundingMode.HALF_UP)
+                    v[i][0] = engine.A[i][j]
                 }
             }
             if (v.F() <= eps) continue
-            v *= BigDecimal.ONE.setScale(Precision.scale, RoundingMode.HALF_UP).divide(v.F(), Precision.mc).setScale(Precision.scale, RoundingMode.HALF_UP)
+            v *= BigDecimal.ONE.divide(v.F(), Precision.mc).setScale(Precision.scale, RoundingMode.HALF_UP)
             v[j][0] -= BigDecimal.ONE
-            v *= BigDecimal.ONE.setScale(Precision.scale, RoundingMode.HALF_UP).divide(v.F(), Precision.mc).setScale(Precision.scale, RoundingMode.HALF_UP)
+            v *= BigDecimal.ONE.divide(v.F(), Precision.mc).setScale(Precision.scale, RoundingMode.HALF_UP)
 //            v.print()
             engine.v = v
             qEngine.v = v
@@ -52,6 +58,9 @@ class Task6 : Task {
     }
 
     override fun output() {
-        TODO("Not yet implemented")
+        println("Q = ")
+        Q.print()
+        println("R = ")
+        R.print()
     }
 }

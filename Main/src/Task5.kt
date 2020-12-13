@@ -12,7 +12,7 @@ class Task5 : Task {
         A = Matrix(n, n)
         for (i in 0 until n) {
             for (j in 0 until n) {
-                A[i][j] = read.nextBigDecimal() .setScale(Precision.scale, RoundingMode.HALF_UP)
+                A[i][j] = read.nextBigDecimal()
             }
         }
         v = Matrix(n, 1)
