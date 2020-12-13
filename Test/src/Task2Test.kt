@@ -56,7 +56,6 @@ internal class Task2Test {
         engine.b.set(listOf(2,-3))
 
         engine.execute()
-
         assert((engine.A * engine.x - engine.b).F() <= engine.eps)
     }
 
@@ -64,12 +63,13 @@ internal class Task2Test {
     fun `simple test 2`() {
         val engine = Task2()
         engine.eps = accuracy
-        engine.n = 2
+        engine.n = 3
         do {
             engine.A = nextMatrix(engine.n, engine.n)
             engine.b = nextMatrix(engine.n, 1)
         } while (!engine.execute())
         assert((engine.A * engine.x - engine.b).F() <= engine.eps)
+
     }
 
 }

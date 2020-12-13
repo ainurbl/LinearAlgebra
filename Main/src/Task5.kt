@@ -23,23 +23,23 @@ class Task5 : Task {
 
     var EnA = Matrix(0,0)
 
-    private val minus2 = BigDecimal(-2, Precision.mc)
+    private val minus2 = BigDecimal(-2, Precision.mc).setScale(Precision.scale, RoundingMode.HALF_UP)
 
     override fun execute(): Boolean {
         EnA = A.copy()
-//        EnA.print()
         A = v.transpose() * A
-//        v.transpose().print()
-//        A.print()
         A = v * A
-//        A.print()
-
         A *= minus2
-//        A.print()
-
         A = EnA + A
-//        A.print()
+        return true
+    }
 
+    fun executeRight(): Boolean {
+        EnA = A.copy()
+        A *= v
+        A *= v.transpose()
+        A *= minus2
+        A += EnA
         return true
     }
 

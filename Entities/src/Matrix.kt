@@ -57,6 +57,17 @@ data class Matrix(val rows: Int, val cols: Int) {
         return arr[i][j].abs().setScale(Precision.scale, RoundingMode.HALF_UP) <= eps
     }
 
+    fun isTridiagonal(eps: BigDecimal): Boolean {
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                if (Math.abs(i-j) >= 2) {
+                    if(arr[i][j].abs() > eps)return false
+                }
+            }
+        }
+        return true
+    }
+
     fun isOrthogonal(eps: BigDecimal): Boolean {
         if (rows != cols) return false
 //        (this * transpose() - I(rows)).print()
@@ -199,8 +210,8 @@ data class Matrix(val rows: Int, val cols: Int) {
         val returnMatrix = Matrix(rows, cols)
         for (i in 0 until returnMatrix.rows) {
             for (j in 0 until returnMatrix.cols) {
-                returnMatrix[i][j] = arr[i][j] * bigDecimal
-                returnMatrix[i][j].setScale(Precision.scale, RoundingMode.HALF_UP)
+                returnMatrix[i][j] = (arr[i][j] * bigDecimal).setScale(Precision.scale, RoundingMode.HALF_UP)
+
             }
         }
         return returnMatrix
