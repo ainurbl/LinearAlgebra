@@ -63,7 +63,7 @@ internal class Task2Test {
     fun `simple test 2`() {
         val engine = Task2()
         engine.eps = accuracy
-        engine.n = 3
+        engine.n = 2
         do {
             engine.A = nextMatrix(engine.n, engine.n)
             engine.b = nextMatrix(engine.n, 1)

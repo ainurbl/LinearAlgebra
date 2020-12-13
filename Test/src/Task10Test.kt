@@ -1,17 +1,18 @@
 import Matrix.Companion.nextMatrix
 import Matrix.Companion.nextSymMatrix
+import Matrix.Companion.nextSymTridiagMatrix
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 
-internal class Task8Test {
+internal class Task10Test {
 
     private val accuracy = BigDecimal(0.0001).setScale(Precision.scale, RoundingMode.HALF_UP)
 
     @Test
     fun `simple 1`() {
-        val engine = Task8()
+        val engine = Task10()
         val n = 2
         engine.n = 2
         engine.A = Matrix(n, n)
@@ -31,10 +32,10 @@ internal class Task8Test {
 
     @Test
     fun `strong 1`() {
-        val engine = Task8()
-        val n = 10
+        val engine = Task10()
+        val n = 20
         engine.n = n
-        engine.A = nextSymMatrix(n, n)
+        engine.A = nextSymTridiagMatrix(n, n)
         val actualA = engine.A.copy()
         engine.eps = accuracy
         engine.execute()

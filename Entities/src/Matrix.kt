@@ -60,8 +60,8 @@ data class Matrix(val rows: Int, val cols: Int) {
     fun isTridiagonal(eps: BigDecimal): Boolean {
         for (i in 0 until rows) {
             for (j in 0 until cols) {
-                if (Math.abs(i-j) >= 2) {
-                    if(arr[i][j].abs() > eps)return false
+                if (Math.abs(i - j) >= 2) {
+                    if (arr[i][j].abs() > eps) return false
                 }
             }
         }
@@ -75,7 +75,7 @@ data class Matrix(val rows: Int, val cols: Int) {
     }
 
     fun isSymmetrical(eps: BigDecimal): Boolean {
-        if(rows != cols) return false
+        if (rows != cols) return false
         return (this - transpose()).F() <= eps
     }
 
@@ -121,7 +121,7 @@ data class Matrix(val rows: Int, val cols: Int) {
     }
 
     fun F(): BigDecimal {
-        var result = BigDecimal.ZERO .setScale(Precision.scale, RoundingMode.HALF_UP)
+        var result = BigDecimal.ZERO.setScale(Precision.scale, RoundingMode.HALF_UP)
         for (i in 0 until rows) {
             for (j in 0 until cols) {
                 result += arr[i][j] * arr[i][j]
@@ -198,7 +198,7 @@ data class Matrix(val rows: Int, val cols: Int) {
         for (i in 0 until returnMatrix.rows) {
             for (j in 0 until returnMatrix.cols) {
                 for (k in 0 until cols) {
-                    returnMatrix[i][j] = (returnMatrix[i][j]  + arr[i][k] * otherMatrix[k][j]).setScale(Precision.scale, RoundingMode.HALF_UP)
+                    returnMatrix[i][j] = (returnMatrix[i][j] + arr[i][k] * otherMatrix[k][j]).setScale(Precision.scale, RoundingMode.HALF_UP)
 
                 }
             }
@@ -221,7 +221,7 @@ data class Matrix(val rows: Int, val cols: Int) {
         fun I(n: Int): Matrix {
             val returnMatrix = Matrix(n, n)
             for (i in 0 until n) {
-                returnMatrix[i][i] = BigDecimal.ONE .setScale(Precision.scale, RoundingMode.HALF_UP)
+                returnMatrix[i][i] = BigDecimal.ONE.setScale(Precision.scale, RoundingMode.HALF_UP)
             }
             return returnMatrix
         }
@@ -243,11 +243,23 @@ data class Matrix(val rows: Int, val cols: Int) {
                     returnMatrix[i][j] = BigDecimal(nextDouble()).setScale(Precision.scale, RoundingMode.HALF_UP)
                 }
             }
-            for(i in 0 until  rows) {
+            for (i in 0 until rows) {
                 for (j in 0 until i) {
                     returnMatrix[i][j] = returnMatrix[j][i]
                 }
             }
+            return returnMatrix
+        }
+
+        fun nextSymTridiagMatrix(rows: Int, cols: Int): Matrix {
+            val returnMatrix = Matrix(rows, cols)
+            for (i in 0 until rows) {
+                for (j in 0 until cols) {
+                    if (Math.abs(i - j) >= 2) returnMatrix[i][j] = BigDecimal.ZERO.setScale(Precision.scale, RoundingMode.HALF_UP)
+                    else returnMatrix[i][j] = BigDecimal(nextDouble()).setScale(Precision.scale, RoundingMode.HALF_UP)
+                }
+            }
+            for(i in 1 until rows) returnMatrix[i-1][i] = returnMatrix[i][i-1]
             return returnMatrix
         }
 

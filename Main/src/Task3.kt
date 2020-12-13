@@ -10,7 +10,7 @@ class Task3 : Task {
     var i = 0
     var j = 0
 
-    private val eps = BigDecimal(0.000001)
+    var eps = BigDecimal.ZERO.setScale(Precision.scale, RoundingMode.HALF_UP)
 
     fun getFromOther(task: Task3) {
         n = task.n
@@ -32,7 +32,7 @@ class Task3 : Task {
         j = read.nextInt() - 1
         c = read.nextBigDecimal()
         s = read.nextBigDecimal()
-        assert(c * c + s * s - BigDecimal.ONE.abs() <= eps)
+        assert((c * c + s * s - BigDecimal.ONE).abs() <= eps)
         assert(i < j && j <= n - 1 && i >= 0)
     }
 
@@ -44,10 +44,12 @@ class Task3 : Task {
         s = A[i2][x].divide(denom, Precision.mc).setScale(Precision.scale, RoundingMode.HALF_UP)
     }
 
+    private var v1 = Matrix(1, n)
+    private var v2 = Matrix(1, n)
 
     override fun execute(): Boolean {
-        val v1 = Matrix(1, n)
-        val v2 = Matrix(1, n)
+        v1 = Matrix(1, n)
+        v2 = Matrix(1, n)
 
         for (k in 0 until n) {
             v1[0][k] = (c * A[i][k] + s * A[j][k]).setScale(Precision.scale, RoundingMode.HALF_UP)

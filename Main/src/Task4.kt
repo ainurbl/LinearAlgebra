@@ -2,14 +2,14 @@ import Matrix.Companion.I
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class Task4 : Task {
+class Task4(private val isTridiag: Boolean = false) : Task {
 
     var n = 0
     var A = Matrix(0, 0)
     var Q = Matrix(0, 0)
     var R = Matrix(0, 0)
 
-    private val accuracy = BigDecimal(0.0000001)
+    private var eps = BigDecimal(0.00000001, Precision.mc).setScale(Precision.scale, RoundingMode.HALF_UP)
 
     override fun input() {
         n = read.nextInt()
@@ -21,24 +21,30 @@ class Task4 : Task {
         }
     }
 
+    private val engine = Task3()
+    private val Qengine = Task3()
+
     override fun execute(): Boolean {
-        val engine = Task3()
         engine.n = n
         engine.A = A
-        val Qengine = Task3()
+        engine.eps = eps
         Qengine.n = n
+        Qengine.eps = eps
+
         Qengine.A = I(n)
         for (j in 0 until n) {
             var id = -1
             for (i in j until n) {
-                if (!engine.A.isZero(i, j, accuracy)) {
+                if (!engine.A.isZero(i, j, eps)) {
                     id = i
                     break
                 }
+                if (isTridiag && i > j + 1) break
             }
             if (id == -1) continue
             for (i in id + 1 until n) {
-                if (!engine.A.isZero(i, j, accuracy)) {
+                if (isTridiag && i > j + 1) break
+                if (!engine.A.isZero(i, j, eps)) {
                     engine.erase(j, id, i)
                     Qengine.getFromOther(engine)
                     Qengine.execute()
@@ -48,8 +54,8 @@ class Task4 : Task {
             if (id != j) {
                 engine.i = j
                 engine.j = id
-                engine.c = BigDecimal.ZERO
-                engine.s = BigDecimal.ONE
+                engine.c = BigDecimal.ZERO.setScale(Precision.scale, RoundingMode.HALF_UP)
+                engine.s = BigDecimal.ONE.setScale(Precision.scale, RoundingMode.HALF_UP)
                 Qengine.getFromOther(engine)
 
                 Qengine.execute()
