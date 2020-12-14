@@ -24,7 +24,10 @@ class Task4(private val isTridiag: Boolean = false) : Task {
     private val engine = Task3()
     private val Qengine = Task3()
 
+    val lastGgs = mutableListOf<Pair<Pair<Int, Int>, Pair<BigDecimal, BigDecimal>>>()
+
     override fun execute(): Boolean {
+        lastGgs.clear()
         engine.n = n
         engine.A = A
         engine.eps = eps
@@ -49,6 +52,7 @@ class Task4(private val isTridiag: Boolean = false) : Task {
                     Qengine.getFromOther(engine)
                     Qengine.execute()
                     engine.execute()
+                    lastGgs.add(Pair(Pair(Qengine.i, Qengine.j), Pair(Qengine.s, Qengine.c)))
                 }
             }
             if (id != j) {
@@ -60,10 +64,12 @@ class Task4(private val isTridiag: Boolean = false) : Task {
 
                 Qengine.execute()
                 engine.execute()
+
+                lastGgs.add(Pair(Pair(Qengine.i, Qengine.j), Pair(Qengine.s, Qengine.c)))
             }
         }
         R = engine.A
-        Q = Qengine.A.transpose().copy()
+        Q = Qengine.A.transpose()
 //        R.print()
 //        Q.print()
         return true

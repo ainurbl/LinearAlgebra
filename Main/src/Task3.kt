@@ -65,4 +65,11 @@ class Task3 : Task {
     override fun output() {
         A.print()
     }
+
+    fun set(gg: Pair<Pair<Int, Int>, Pair<BigDecimal, BigDecimal>>) {
+        i = gg.first.first
+        j = gg.first.second
+        s = gg.second.first
+        c = gg.second.second
+    }
 }

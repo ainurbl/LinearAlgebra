@@ -23,40 +23,33 @@ class Task10 : Task {
         assert(A.isTridiagonal(eps))
         val engine = Task4(true)
         engine.n = n
-        var RQ = Matrix(n, n)
         engine.A = A
         vs = I(n)
-
         do {
 //            engine.A.print()
             engine.execute()
-            RQ = fastMult(engine.R, engine.Q)
-//            engine.Q.print()
-//            engine.R.print()
-//            (engine.Q * engine.R ).print()
-            vs *= engine.Q
-            engine.A = RQ
+//            RQ = fastMult(engine.R, engine.Q)
+            val qCheck = multWithGivens(engine.R.transpose(), engine.lastGgs).transpose()
+//            println((qCheck - RQ).F())
+            val tt = multWithGivens(vs.transpose(), engine.lastGgs)
+            vs = tt
+            engine.A = qCheck
 
         } while (!engine.A.allCirclesAreLessThan(eps))
         A = engine.A
         return true
     }
 
-    private fun fastMult(r: Matrix, q: Matrix): Matrix {
-        val retMatrix = Matrix(n, n)
-        for (i in 0 until n) {
-            for (j in 0 until n) {
-                var adding = q[i][j] * r[i][i]
-                if (i != n - 1) {
-                    adding += r[i][i + 1] * q[i + 1][j]
-                }
-                if(i != n - 1 && i != n - 2) {
-                    adding += r[i][i + 2] * q[i + 2][j]
-                }
-                retMatrix[i][j] = adding.setScale(Precision.scale, RoundingMode.HALF_UP)
-            }
+    val engine = Task3()
+    private fun multWithGivens(matrix: Matrix, ggs: List<Pair<Pair<Int,Int>, Pair<BigDecimal, BigDecimal>>>): Matrix {
+        engine.A = matrix
+        engine.eps = eps
+        engine.n = n
+        for (gg in ggs) {
+            engine.set(gg)
+            engine.execute()
         }
-        return retMatrix
+        return engine.A.transpose()
     }
 
     override fun output() {

@@ -33,7 +33,7 @@ internal class Task10Test {
     @Test
     fun `strong 1`() {
         val engine = Task10()
-        val n = 20
+        val n = 30
         engine.n = n
         engine.A = nextSymTridiagMatrix(n, n)
         val actualA = engine.A.copy()
