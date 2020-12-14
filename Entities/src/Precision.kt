@@ -7,5 +7,5 @@ object Precision {
     val bigScale = 1000
     val mc = MathContext(scale)
     val bigMc = MathContext(bigScale)
-    val scaleEps = BigDecimal("0.00000000000000001").setScale(scale, RoundingMode.HALF_UP)
+    val scaleEps = BigDecimal("0.00000001").setScale(scale, RoundingMode.HALF_UP)
 }
