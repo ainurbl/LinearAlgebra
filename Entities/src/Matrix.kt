@@ -251,7 +251,9 @@ data class Matrix(val rows: Int, val cols: Int) {
             return returnMatrix
         }
 
-        fun nextSymTridiagMatrix(rows: Int, cols: Int): Matrix {
+
+
+        fun nextTridiagMatrix(rows: Int, cols: Int): Matrix {
             val returnMatrix = Matrix(rows, cols)
             for (i in 0 until rows) {
                 for (j in 0 until cols) {

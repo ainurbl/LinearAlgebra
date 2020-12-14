@@ -6,13 +6,13 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 
-internal class Task10Test {
+internal class Task11Test {
 
     private val accuracy = BigDecimal(0.0001).setScale(Precision.scale, RoundingMode.HALF_UP)
 
     @Test
     fun `simple 1`() {
-        val engine = Task10()
+        val engine = Task11()
         val n = 2
         engine.n = 2
         engine.A = Matrix(n, n)
@@ -32,7 +32,7 @@ internal class Task10Test {
 
     @Test
     fun `strong 1`() {
-        val engine = Task10()
+        val engine = Task11()
         val n = 30
         engine.n = n
         engine.A = nextTridiagMatrix(n, n)

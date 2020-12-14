@@ -26,15 +26,9 @@ class Task10 : Task {
         engine.A = A
         vs = I(n)
         do {
-//            engine.A.print()
             engine.execute()
-//            RQ = fastMult(engine.R, engine.Q)
-            val qCheck = multWithGivens(engine.R.transpose(), engine.lastGgs).transpose()
-//            println((qCheck - RQ).F())
-            val tt = multWithGivens(vs.transpose(), engine.lastGgs)
-            vs = tt
-            engine.A = qCheck
-
+            vs = multWithGivens(vs.transpose(), engine.lastGgs)
+            engine.A = multWithGivens(engine.R.transpose(), engine.lastGgs).transpose()
         } while (!engine.A.allCirclesAreLessThan(eps))
         A = engine.A
         return true
