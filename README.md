@@ -1,2 +1,2 @@
 # LinearAlgebra
-Linear algebra library
+Linear algebra project 
